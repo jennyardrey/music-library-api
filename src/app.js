@@ -4,10 +4,8 @@ const artistControllers = require('./controllers/artists');
 const app = express();
 app.use(express.json());
 
-/* app.get('*', (req, res) => {
-  res.status(200).json({ message: 'Bonjour, Terre!' });
-});
- */
+app.get('/artists', artistControllers.list);
 app.post('/artists', artistControllers.create);
+app.get('/artists/:artistId', artistControllers.find);
 
 module.exports = app;
