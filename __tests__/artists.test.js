@@ -127,6 +127,19 @@ describe('/artists', () => {
             done();
           });
       });
+      it('updates artist name by id', done => {
+        const artist = artists[0];
+        request(app)
+          .patch(`/artists/${artist._id}`)
+          .send({ name: 'Mr Ben' })
+          .then(res => {
+            expect(res.status).toBe(200);
+            Artist.findById(artist._id, (_, updatedArtist) => {
+              expect(updatedArtist.name).toBe('Mr Ben');
+              done();
+            });
+          });
+      });
     });
 
     describe('DELETE /artists/:artistId', () => {
