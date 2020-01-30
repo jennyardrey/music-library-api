@@ -7,5 +7,6 @@ app.use(express.json());
 app.get('/artists', artistControllers.list);
 app.post('/artists', artistControllers.create);
 app.get('/artists/:artistId', artistControllers.find);
+app.patch('/artists/:artistId', artistControllers.update);
 
 module.exports = app;

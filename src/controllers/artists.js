@@ -18,12 +18,23 @@ exports.list = (req, res) => {
 };
 
 exports.find = (req, res) => {
-  console.log(req.params.artistId);
-  Artist.find()
-    .where('_id')
-    .equals(req.params.artistId)
-    .exec((err, data) => {
-      console.log(data);
-      res.status(200).json(data);
-    });
+  // console.log(req.params.artistId);
+  Artist.find({ _id: req.params.artistId }, (err, data) => {
+    if (!data) {
+      res.status(404).json({ error: 'The artist could not be found.' });
+    } else res.status(200).json(data[0]);
+  });
+};
+
+exports.update = (req, res) => {
+  Artist.findById({ _id: req.params.artistId }, (err, data) => {
+    if (!data) {
+      res.status(404).json({ error: 'The artist could not be found.' });
+    } else {
+      data.set(req.body);
+      data.save().then(updatedData => {
+        res.status(200).json(updatedData);
+      });
+    }
+  });
 };

@@ -82,6 +82,8 @@ describe('/artists', () => {
         request(app)
           .get(`/artists/${artist._id}`)
           .then(res => {
+            /*           console.log(artist.name);
+            console.log(res.body); */
             expect(res.status).toBe(200);
             expect(res.body.name).toBe(artist.name);
             expect(res.body.genre).toBe(artist.genre);
@@ -101,7 +103,7 @@ describe('/artists', () => {
     });
 
     describe('PATCH /artists/:artistId', () => {
-      xit('updates artist genre by id', done => {
+      it('updates artist genre by id', done => {
         const artist = artists[0];
         request(app)
           .patch(`/artists/${artist._id}`)
@@ -115,7 +117,7 @@ describe('/artists', () => {
           });
       });
 
-      xit('returns a 404 if the artist does not exist', done => {
+      it('returns a 404 if the artist does not exist', done => {
         request(app)
           .patch('/artists/12345')
           .send({ genre: 'Psychedelic Rock' })
