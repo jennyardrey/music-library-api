@@ -9,7 +9,7 @@ exports.create = (req, res) => {
     artist: artistId,
   });
   if (!album.artist) {
-    res.status(404).json({ error: '33The artist could not be found.' });
+    res.status(404).json({ error: 'The artist could not be found.' });
   } else {
     album.save().then(() => {
       res.status(201).json(album);

@@ -87,41 +87,42 @@ describe('/albums', () => {
   describe('with albums in the database', () => {
     let albums;
     beforeEach(done => {
-      Promise.all([Album.create({ name: 'Album1', year: 1999, artist: artist._id })]).then(
-        documents => {
-          albums = documents;
-          console.log(albums);
-          done();
-        },
-      );
+      Promise.all([Album.create({ name: 'Album1', year: 1999 })]).then(documents => {
+        albums = documents;
+        done();
+      });
     });
 
-    describe('GET /artists/albums', () => {
+    describe('GET /artists/:artistId/albums', () => {
       it('gets all albums', done => {
         request(app)
-          .get('/artists/albums')
+          .get(`/artists/${artist._id}/albums`)
           .then(res => {
             expect(res.status).toBe(200);
-            expect(res.body.length).toBe(3);
-            res.body.forEach(album => {
-              expect(album.name).toBe(album.name);
-              expect(album.year).toBe(album.year);
-            });
-            done();
+            console.log(res.body.length);
+            expect(res.body.length).toBe(1);
+            // const expected = albums.find(a => a._id.toString() === albums._id);
+            console.log(albums);
+            expect(res.body.name).toBe(albums.name);
+            expect(res.body.year).toBe(albums.year);
           });
+        done();
       });
     });
 
     describe('GET /artists/:artistId/albums', () => {
       it('gets albums by artist id', done => {
-        const album = albums;
-        console.log(album);
         request(app)
           .get(`/artists/${artist._id}`)
           .then(res => {
             expect(res.status).toBe(200);
-            expect(res.body.name).toBe(album.name);
-            expect(res.body.year).toBe(album.year);
+            const result = [res.body];
+
+            result.forEach(album => {
+              // const expected = albums.find(a => a._id.toString() === album._id);
+              expect(res.body.name).toBe(album.name);
+              expect(res.body.year).toBe(album.year);
+            });
             done();
           });
       });
