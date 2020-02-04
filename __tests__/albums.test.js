@@ -96,13 +96,11 @@ describe('/albums', () => {
     describe('GET /artists/:artistId/albums', () => {
       it('gets all albums', done => {
         request(app)
-          .get(`/artists/${artist._id}/albums`)
+          .get(`/albums`)
           .then(res => {
             expect(res.status).toBe(200);
-            console.log(res.body.length);
             expect(res.body.length).toBe(1);
             // const expected = albums.find(a => a._id.toString() === albums._id);
-            console.log(albums);
             expect(res.body.name).toBe(albums.name);
             expect(res.body.year).toBe(albums.year);
           });

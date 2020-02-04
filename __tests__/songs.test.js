@@ -43,16 +43,18 @@ describe('Songs', () => {
     done();
   });
 
-  describe('POST /album/:albumId/song', () => {
-    xit('creates a new song under an album', done => {
+  describe('POST /albums/:albumId/songs', () => {
+    it('creates a new song under an album', done => {
       request(app)
-        .post(`/album/${albumId}/song`)
+        .post(`/albums/${albumId}/songs`)
         .send({
-          artistId,
           name: 'Solitude Is Bliss',
+          artistId,
+          albumId,
         })
         .then(res => {
-          expect(res.status).toBe(200);
+          console.log(res.body);
+          expect(res.status).toBe(201);
           const songId = res.body._id;
           expect(res.body).toEqual({
             name: 'Solitude Is Bliss',
