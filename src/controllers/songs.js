@@ -11,7 +11,7 @@ exports.create = (req, res) => {
       .populate({ path: 'artist' })
       .populate({ path: 'album' })
       .exec((err, songId) => {
-        console.log(songId);
+        console.log(savedSong);
         res.status(201).json(songId);
       });
   });

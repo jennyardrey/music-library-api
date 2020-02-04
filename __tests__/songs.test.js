@@ -49,16 +49,16 @@ describe('Songs', () => {
         .post(`/albums/${albumId}/songs`)
         .send({
           name: 'Solitude Is Bliss',
-          artistId,
-          albumId,
+          artist: artistId,
+          album: albumId,
         })
         .then(res => {
-          console.log(res.body);
+          console.log(artistId);
           expect(res.status).toBe(201);
           const songId = res.body._id;
           expect(res.body).toEqual({
-            name: 'Solitude Is Bliss',
             _id: songId,
+            name: 'Solitude Is Bliss',
             artist: {
               _id: artistId,
               name: 'Tame Impala',
