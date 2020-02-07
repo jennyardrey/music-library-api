@@ -125,5 +125,36 @@ describe('/albums', () => {
           });
       });
     });
+    describe('PATCH /artists/:artistId/albums/:albumId', () => {
+      it('updates album info by artist id', done => {
+        const album = albums[0];
+        const newAlbumName = 'New Album';
+        request(app)
+          .patch(`/artists/${artist._id}/albums/${album._id}`)
+          .send({ name: newAlbumName })
+          .then(res => {
+            expect(res.status).toBe(200);
+            Album.findById(album._id, (_, updatedAlbum) => {
+              expect(updatedAlbum.name).toBe('New Album');
+              done();
+            });
+          });
+      });
+    });
+    describe('DELETE /artists/:artistId/albums/albumId', () => {
+      it('deletes an album by artist id', done => {
+        const album = albums[0];
+        request(app)
+          .delete(`/artists/${artist._id}/albums/${album._id}`)
+          .then(res => {
+            expect(res.status).toBe(204);
+            Album.findById(album._id, (error, updatedAlbum) => {
+              expect(error).toBe(null);
+              expect(updatedAlbum).toBe(null);
+              done();
+            });
+          });
+      });
+    });
   });
 });
