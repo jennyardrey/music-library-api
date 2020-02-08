@@ -53,7 +53,6 @@ describe('/albums', () => {
         })
         .then(res => {
           expect(res.status).toBe(201);
-
           Album.findById(res.body._id, (err, album) => {
             expect(err).toBe(null);
             expect(album.name).toBe('InnerSpeaker');
